@@ -54,7 +54,7 @@ function Galaxy({ hover }: { hover: boolean }) {
   useFrame((_, d) => {
     if (!ref.current) return;
     ref.current.rotation.y += d * (hover ? 0.35 : 0.08);
-    const s = THREE.MathUtils.lerp(ref.current.scale.x, hover ? 1.12 : 1, 0.08);
+    const s = THREE.MathUtils.lerp(ref.current.scale.x, hover ? 0.95 : 0.82, 0.08);
     ref.current.scale.setScalar(s);
   });
   return (
