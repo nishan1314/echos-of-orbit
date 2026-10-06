@@ -15,14 +15,14 @@ const TEAM = [
 export function AboutPage({ onBack }: { onBack: () => void }) {
   return (
     <motion.div className="relative z-10 min-h-screen bg-transparent text-foreground" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }}>
-      <header className="sticky top-0 z-20 flex items-center gap-4 bg-background/80 p-4 backdrop-blur-md sm:px-8 sm:py-6 border-b border-border/40">
-        <button onClick={onBack} className="rounded-full p-2 text-primary transition-colors hover:bg-primary/20">
+      <header className="fixed inset-x-0 top-0 z-20 flex items-center gap-4 bg-transparent p-4 sm:px-8 sm:py-6 pointer-events-none">
+        <button onClick={onBack} className="pointer-events-auto rounded-full p-2 text-primary transition-colors hover:bg-primary/20">
           <ArrowLeft className="h-6 w-6" />
         </button>
-        <span className="font-display text-sm font-black tracking-[0.2em]">ECHOES OF ORBIT // ABOUT</span>
+        <span className="font-display text-sm font-black tracking-[0.2em] pointer-events-auto">ECHOES OF ORBIT // ABOUT</span>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-16 sm:px-8">
+      <main className="mx-auto max-w-6xl px-4 pb-16 pt-24 sm:px-8 sm:pt-32">
         <div className="text-center mb-24">
           <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2, duration: 0.8 }} className="inline-flex items-center justify-center">
             <img src={blueDotLogo} alt="Team BlueDot" className="h-24 sm:h-32 w-auto object-contain" />

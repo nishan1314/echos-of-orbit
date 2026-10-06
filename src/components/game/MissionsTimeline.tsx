@@ -35,14 +35,14 @@ const TIMELINE = [
 export function MissionsTimeline({ onBack }: { onBack: () => void }) {
   return (
     <motion.div className="relative z-10 min-h-screen bg-transparent text-foreground" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }}>
-      <header className="sticky top-0 z-20 flex items-center gap-4 bg-background/80 p-4 backdrop-blur-md sm:px-8 sm:py-6 border-b border-border/40">
-        <button onClick={onBack} className="rounded-full p-2 text-primary transition-colors hover:bg-primary/20">
+      <header className="fixed inset-x-0 top-0 z-20 flex items-center gap-4 bg-transparent p-4 sm:px-8 sm:py-6 pointer-events-none">
+        <button onClick={onBack} className="pointer-events-auto rounded-full p-2 text-primary transition-colors hover:bg-primary/20">
           <ArrowLeft className="h-6 w-6" />
         </button>
-        <span className="font-display text-sm font-black tracking-[0.2em]">{GAME_NAME} // MISSIONS</span>
+        <span className="font-display text-sm font-black tracking-[0.2em] pointer-events-auto">{GAME_NAME} // MISSIONS</span>
       </header>
 
-      <main className="mx-auto max-w-5xl px-4 py-12 sm:px-8">
+      <main className="mx-auto max-w-5xl px-4 pb-12 pt-24 sm:px-8 sm:pt-32">
         <div className="text-center mb-16">
           <h1 className="font-display text-4xl font-black tracking-widest text-primary glow-cyan sm:text-6xl">ARCHIVE RECORDS</h1>
           <p className="mt-4 text-sm tracking-[0.3em] text-muted-foreground">DECRYPTING HUMANITY'S LUNAR FOOTPRINT</p>
