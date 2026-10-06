@@ -39,7 +39,7 @@ export function SpaceBackground({ speed = 1 }: { speed?: number }) {
       }
       if (Math.random() < 0.004) shooting.push({ x: Math.random() * w, y: Math.random() * h * 0.5, vx: -7 - Math.random() * 4, vy: 3 + Math.random() * 2, life: 1 });
       for (let i = shooting.length - 1; i >= 0; i--) {
-        const s = shooting[i];
+        const s = shooting[i]!;
         const grad = g.createLinearGradient(s.x, s.y, s.x - s.vx * 12, s.y - s.vy * 12);
         grad.addColorStop(0, `rgba(200,240,255,${s.life})`); grad.addColorStop(1, "rgba(200,240,255,0)");
         g.strokeStyle = grad; g.lineWidth = 1.5;

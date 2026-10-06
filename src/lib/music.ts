@@ -14,7 +14,7 @@ const CHORDS = [
 function playChord(i: number) {
   if (!ctx || !master) return;
   const now = ctx.currentTime;
-  CHORDS[i % CHORDS.length].forEach((f, n) => {
+  CHORDS[i % CHORDS.length]!.forEach((f, n) => {
     [0, 4].forEach((detune) => {
       const o = ctx!.createOscillator();
       const g = ctx!.createGain();
@@ -33,7 +33,7 @@ function playChord(i: number) {
   const s = ctx.createOscillator();
   const sg = ctx.createGain();
   s.type = "sine";
-  s.frequency.value = CHORDS[i % 4][2] * 4;
+  s.frequency.value = CHORDS[i % 4]![2]! * 4;
   sg.gain.setValueAtTime(0, now + 1.5);
   sg.gain.linearRampToValueAtTime(0.015, now + 1.6);
   sg.gain.exponentialRampToValueAtTime(0.0001, now + 4.5);
