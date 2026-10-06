@@ -4,9 +4,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer base {
+  * {
+    cursor: url('/cursor.png'), auto !important;
+  }
+}
+
 @theme inline {
   --font-display: "Orbitron", sans-serif;
-  --font-sans: "Chakra Petch", sans-serif;
+  --font-sans: "Orbitron", sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

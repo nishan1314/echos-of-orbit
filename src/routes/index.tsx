@@ -5,6 +5,8 @@ import { SpaceBackground } from "@/components/game/SpaceBackground";
 import { LoadingScreen } from "@/components/game/LoadingScreen";
 import { CharacterSelection } from "@/components/game/CharacterSelection";
 import { Dashboard } from "@/components/game/Dashboard";
+import { MissionsTimeline } from "@/components/game/MissionsTimeline";
+import { AboutPage } from "@/components/game/AboutPage";
 import { MusicButton } from "@/components/game/MusicButton";
 import { makeGuestId, type Character } from "@/components/game/constants";
 import { startMusic, stopMusic } from "@/lib/music";
@@ -23,7 +25,7 @@ export const Route = createFileRoute("/")({
   component: Game,
 });
 
-type Stage = "loading" | "select" | "dashboard";
+type Stage = "loading" | "select" | "dashboard" | "missions" | "about";
 
 function Game() {
   const [stage, setStage] = useState<Stage>("loading");
@@ -32,14 +34,9 @@ function Game() {
   const [musicWanted, setMusicWanted] = useState(true);
   const [musicOn, setMusicOn] = useState(false);
 
-  useEffect(() => {
-    const m = localStorage.getItem("musicEnabled");
-    if (m === "false") setMusicWanted(false);
-  }, []);
-
   // Try autoplay; if blocked, start on first interaction.
   useEffect(() => {
-    if (!musicWanted) return;
+    if (!musicWanted || stage === "loading") return;
     let done = false;
     const tryStart = async () => {
       if (done) return;
@@ -50,10 +47,10 @@ function Game() {
     ["pointerdown", "keydown"].forEach((e) => window.addEventListener(e, tryStart));
     tryStart();
     return remove;
-  }, [musicWanted]);
+  }, [musicWanted, stage]);
 
   const toggleMusic = async () => {
-    if (musicOn) { stopMusic(); setMusicOn(false); setMusicWanted(false); localStorage.setItem("musicEnabled", "false"); }
+    if (musicWanted) { stopMusic(); setMusicOn(false); setMusicWanted(false); localStorage.setItem("musicEnabled", "false"); }
     else { const ok = await startMusic(); setMusicOn(ok); setMusicWanted(true); localStorage.setItem("musicEnabled", "true"); }
   };
 
@@ -75,13 +72,15 @@ function Game() {
   return (
     <main className="relative min-h-screen overflow-hidden">
       <SpaceBackground speed={stage === "loading" ? 3 : 1} />
-      {stage !== "dashboard" && (
-        <div className="fixed right-4 top-4 z-30"><MusicButton on={musicOn} onToggle={toggleMusic} label /></div>
+      {stage === "select" && (
+        <div className="fixed right-4 top-4 z-30"><MusicButton on={musicWanted} onToggle={toggleMusic} label /></div>
       )}
       <AnimatePresence mode="wait">
         {stage === "loading" && <LoadingScreen key="l" onDone={onLoaded} />}
         {stage === "select" && <CharacterSelection key="s" selected={character} guestId={guestId} onSelect={select} onEnter={() => setStage("dashboard")} />}
-        {stage === "dashboard" && character && guestId && <Dashboard key="d" character={character} guestId={guestId} musicOn={musicOn} onToggleMusic={toggleMusic} />}
+        {stage === "dashboard" && character && guestId && <Dashboard key="d" character={character} guestId={guestId} musicOn={musicWanted} onToggleMusic={toggleMusic} onNavigate={(s) => setStage(s as Stage)} />}
+        {stage === "missions" && <MissionsTimeline key="m" onBack={() => setStage("dashboard")} />}
+        {stage === "about" && <AboutPage key="a" onBack={() => setStage("dashboard")} />}
       </AnimatePresence>
     </main>
   );
